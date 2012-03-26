@@ -45,6 +45,11 @@ private:
 	MAHandle diagramTekening;
 	Image* diagramImage;
 
+	//scherm grootte
+	MAExtent screenSize;
+	int screenWidth;
+	int screenHeight;
+
 
 public:
 	VisueelScherm( WeerData* weerData );

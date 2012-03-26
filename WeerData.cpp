@@ -87,7 +87,7 @@ void WeerData::httpFinished( HttpConnection* http, int result )
 
 	//recv() leest maximaal 1024 bytes (staat in CONNECTION_BUFFER_SIZE)
 	//als we beginnen met het lezen van 700 bytes, komen we later mooi uit op de dataset die we willen lezen
-	this->recv( weerDataRecv, 900 );
+	this->recv( weerDataRecv, 1000 );
 }
 
 
@@ -107,17 +107,14 @@ void WeerData::connRecvFinished( Connection* conn, int result )
 			//zonneschijn data vandaag
 			strncpy( data, weerDataString + 33, 2 ); //offset van 33 kom je bij het percentage zonneschijn
         	this->zonneschijn[0] = atoi( data );
-        	printf( "Zonneschijn vandaag: %i", zonneschijn[0]);
 
         	//morgen
 			strncpy( data, weerDataString + 69, 2 );
         	this->zonneschijn[1] = atoi( data );
-        	printf( "Zonneschijn morgen: %i", zonneschijn[1]);
 
         	//overmorgen
 			strncpy( data, weerDataString + 105, 2 );
         	this->zonneschijn[2] = atoi( data );
-        	printf( "Zonneschijn overmorgen: %i", zonneschijn[2]);
         }
 
 
@@ -132,17 +129,14 @@ void WeerData::connRecvFinished( Connection* conn, int result )
 			//neerslag data vandaag
 			strncpy( data, weerDataString + 33, 2 );
         	this->neerslag[0] = atoi( data );
-        	printf( "Neerslag vandaag: %i", neerslag[0]);
 
         	//morgen
 			strncpy( data, weerDataString + 69, 2 );
         	this->neerslag[1] = atoi( data );
-        	printf( "Neerslag morgen: %i", neerslag[1]);
 
         	//overmorgen
 			strncpy( data, weerDataString + 105, 2 );
         	this->neerslag[2] = atoi( data );
-        	printf( "Neerslag: %i", neerslag[2]);
         }
 
 
@@ -157,17 +151,14 @@ void WeerData::connRecvFinished( Connection* conn, int result )
         	//min temp data vandaag
 			strncpy( data, weerDataString + 32, 1 );
         	this->minimumtemperatuur[0] = atoi( data )/10; //is in formaat 1/3 (1 tot 3 graden), we pakken alleen de 1. deling haalt tweede karakter weg.
-        	printf( "Minimumtemp vandaag: %i", minimumtemperatuur[0]);
 
         	//morgen
 			strncpy( data, weerDataString + 69, 1 );
         	this->minimumtemperatuur[1] = atoi( data )/10;
-        	printf( "Minimumtemp morgen: %i", minimumtemperatuur[1]);
 
         	//overmorgen
 			strncpy( data, weerDataString + 106, 1 );
         	this->minimumtemperatuur[2] = atoi( data )/10;
-        	printf( "Minimumtemp overmorgen: %i", minimumtemperatuur[2]);
 
         	//we zijn klaar! geen andere data is meer nodig, dus sluit de connectie
         	this->close();
